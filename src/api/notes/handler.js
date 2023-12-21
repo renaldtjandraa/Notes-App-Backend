@@ -2,6 +2,12 @@
 class NotesHandler {
   constructor(service) {
     this._service = service;
+
+    this.postNoteHandler = this.postNoteHandler.bind(this);
+    this.getNotesHandler = this.getNotesHandler.bind(this);
+    this.putNoteByIdHandler = this.putNoteByIdHandler.bind(this);
+    this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
+    this.getNoteByIdHandler = this.getNoteByIdHandler.bind(this);
   }
 
   postNoteHandler(request, h) {
@@ -24,7 +30,6 @@ class NotesHandler {
         status: 'fail',
         message: error.message,
       });
-
       response.code(400);
       return response;
     }
@@ -43,7 +48,7 @@ class NotesHandler {
   getNoteByIdHandler(request, h) {
     try {
       const {id} = request.params;
-      const note = this._service.getNoteByIdHandler(id);
+      const note = this._service.getNoteById(id);
       return {
         status: 'success',
         data: {
